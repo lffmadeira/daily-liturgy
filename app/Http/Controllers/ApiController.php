@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Http;
+use App\Http\Integrations\ApiConnector;
 
 class ApiController extends Controller
 {
-    public function __invoke()
+    public function index()
     {
-       return Http::get('https://liturgia.up.railway.app/v2/')->json();
+        $apiConnector = new ApiConnector();
+        $liturgy = $apiConnector->getTodayLiturgy();
+        return view('welcome', ['liturgy' => $liturgy]);
     }
 }
